@@ -18,7 +18,14 @@ FROM `reservation`
     LEFT JOIN `final_invoice` ON `final_invoice`.`reservation_id` = `reservation`.`reservation_id`
     LEFT JOIN `driver` ON `reservation`.`driver_name` = `driver`.`driver_id`
 
-    
+-- creates list of pick-up and drop-off locations with driver names
+SELECT `pick-up`.`pick-up_id`, `location`.`location_name`, `drop-off`.`drop-off_id`, `location`.`location_name`, `reservation`.`reservation_id`, `driver`.`driver_name`
+FROM `reservation`
+    LEFT JOIN `pick-up` ON `pick-up`.`reservation_id` = `reservation`.`reservation_id`
+    LEFT JOIN `drop-off` ON `drop-off`.`reservation_id` = `reservation`.`reservation_id`
+    LEFT JOIN `driver` ON `reservation`.`driver_name` = `driver`.`driver_id`
+    LEFT JOIN `location` ON `pick-up`.`location_id` = `location`.`location_id`
+WHERE (`reservation`.`reservation_id` IS NOT NULL)
 
 
 --- not quite sure why this query does not work. Looked it up in documentation
